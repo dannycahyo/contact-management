@@ -1,6 +1,7 @@
 package danny_dwi_cahyono.contact_management.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,7 @@ class User {
 
     @Column(name = "token_expired_at")
     private Long tokenExpiredAt;
+
+    @OneToMany(mappedBy = "user")
+    private List<Contact> contacts;
 }
