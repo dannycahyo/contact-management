@@ -47,6 +47,23 @@ public class ContactService {
         return mapToResponse(contact);
     }
 
+    @Transactional
+    public ContactResponse updateByID(User user, String id, CreateContactRequest request) {
+        validationService.validate(request);
+
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        contact.setFirstName(request.getFirstName());
+        contact.setLastName(request.getLastName());
+        contact.setEmail(request.getEmail());
+        contact.setPhone(request.getPhone());
+
+        contactRepository.save(contact);
+
+        return mapToResponse(contact);
+    }
+
     private ContactResponse mapToResponse(Contact contact) {
         return ContactResponse.builder()
                 .id(contact.getId())

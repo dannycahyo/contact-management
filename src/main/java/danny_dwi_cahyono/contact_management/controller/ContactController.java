@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 public class ContactController {
@@ -32,6 +33,15 @@ public class ContactController {
     @GetMapping(path = "/api/contacts/{contactId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<ContactResponse> getContactDetail(User user, @PathVariable("contactId") String contactId) {
         ContactResponse contactResponse = contactService.getById(user, contactId);
+        return WebResponse.<ContactResponse>builder()
+                .data(contactResponse)
+                .build();
+    }
+
+    @PutMapping(path = "/api/contacts/{contactId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<ContactResponse> updateContact(User user, @PathVariable("contactId") String contactId,
+            @RequestBody CreateContactRequest request) {
+        ContactResponse contactResponse = contactService.updateByID(user, contactId, request);
         return WebResponse.<ContactResponse>builder()
                 .data(contactResponse)
                 .build();
