@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +45,14 @@ public class ContactController {
         ContactResponse contactResponse = contactService.updateByID(user, contactId, request);
         return WebResponse.<ContactResponse>builder()
                 .data(contactResponse)
+                .build();
+    }
+
+    @DeleteMapping(path = "/api/contacts/{contactId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<String> deleteContact(User user, @PathVariable("contactId") String contactId) {
+        contactService.deleteByID(user, contactId);
+        return WebResponse.<String>builder()
+                .data("Contact deleted")
                 .build();
     }
 

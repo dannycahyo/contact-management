@@ -64,6 +64,14 @@ public class ContactService {
         return mapToResponse(contact);
     }
 
+    @Transactional
+    public void deleteByID(User user, String id) {
+        Contact contact = contactRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        contactRepository.delete(contact);
+    }
+
     private ContactResponse mapToResponse(Contact contact) {
         return ContactResponse.builder()
                 .id(contact.getId())
