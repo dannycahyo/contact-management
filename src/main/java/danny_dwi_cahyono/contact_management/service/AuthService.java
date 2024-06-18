@@ -43,4 +43,11 @@ public class AuthService {
                 .expiredAt(user.getTokenExpiredAt())
                 .build();
     }
+
+    @Transactional
+    public void logout(User user) {
+        user.setToken(null);
+        user.setTokenExpiredAt(null);
+        userRepository.save(user);
+    }
 }
