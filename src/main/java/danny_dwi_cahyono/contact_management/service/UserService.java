@@ -3,9 +3,11 @@ package danny_dwi_cahyono.contact_management.service;
 import danny_dwi_cahyono.contact_management.entity.User;
 import danny_dwi_cahyono.contact_management.entity.UserResponse;
 import danny_dwi_cahyono.contact_management.model.RegisterUserRequest;
+import danny_dwi_cahyono.contact_management.model.UpdateUserRequest;
 import danny_dwi_cahyono.contact_management.repository.UserRepository;
 import danny_dwi_cahyono.contact_management.security.BCrypt;
 import jakarta.transaction.Transactional;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,30 @@ public class UserService {
     }
 
     public UserResponse get(User user) {
+        return UserResponse.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .build();
+    }
+
+    @Transactional
+    public UserResponse update(User user, UpdateUserRequest request) {
+        validationService.validate(request);
+
+        log.info("Update user request: {}", request);
+
+        if (Objects.nonNull(request.getName())) {
+            user.setName(request.getName());
+        }
+
+        if (Objects.nonNull(request.getPassword())) {
+            user.setPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
+        }
+
+        userRepository.save(user);
+
+        log.info("User updated: {}", user);
+
         return UserResponse.builder()
                 .username(user.getUsername())
                 .name(user.getName())
