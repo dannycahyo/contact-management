@@ -1,6 +1,7 @@
 package danny_dwi_cahyono.contact_management.service;
 
 import danny_dwi_cahyono.contact_management.entity.User;
+import danny_dwi_cahyono.contact_management.entity.UserResponse;
 import danny_dwi_cahyono.contact_management.model.RegisterUserRequest;
 import danny_dwi_cahyono.contact_management.repository.UserRepository;
 import danny_dwi_cahyono.contact_management.security.BCrypt;
@@ -39,5 +40,12 @@ public class UserService {
         user.setName(request.getName());
 
         userRepository.save(user);
+    }
+
+    public UserResponse get(User user) {
+        return UserResponse.builder()
+                .username(user.getUsername())
+                .name(user.getName())
+                .build();
     }
 }
