@@ -10,8 +10,6 @@ import danny_dwi_cahyono.contact_management.service.ContactService;
 import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +32,7 @@ public class ContactController {
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
         SearchContactRequest searchContactRequest = SearchContactRequest.builder()
                 .page(page)
