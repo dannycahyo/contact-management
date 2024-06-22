@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.UUID;
+import java.util.List;
 
 @Service
 public class AddressService {
@@ -45,6 +47,19 @@ public class AddressService {
         addressRepository.save(address);
 
         return mapToAddressResponse(address);
+    }
+
+    @Transactional
+    public List<AddressResponse> list(User user,
+            String contactId) {
+        Contact contact = contactRepository.findFirstByUserAndId(user, contactId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        List<Address> addresses = addressRepository.findAllByContact(contact);
+
+        return addresses.stream()
+                .map(this::mapToAddressResponse)
+                .toList();
     }
 
     private AddressResponse mapToAddressResponse(Address address) {

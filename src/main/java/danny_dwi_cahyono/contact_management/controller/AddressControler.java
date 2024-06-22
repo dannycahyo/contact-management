@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @RestController
 public class AddressControler {
@@ -30,4 +33,14 @@ public class AddressControler {
                 .build();
     }
 
+    @GetMapping(path = "/api/contacts/{contactId}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<List<AddressResponse>> getAllAddress(User user,
+            @PathVariable("contactId") String contactId) {
+
+        List<AddressResponse> addressResponses = addressService.list(user, contactId);
+
+        return WebResponse.<List<AddressResponse>>builder()
+                .data(addressResponses)
+                .build();
+    }
 }
