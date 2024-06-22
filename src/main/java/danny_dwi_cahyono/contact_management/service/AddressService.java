@@ -5,6 +5,7 @@ import danny_dwi_cahyono.contact_management.entity.Contact;
 import danny_dwi_cahyono.contact_management.entity.User;
 import danny_dwi_cahyono.contact_management.model.AddressResponse;
 import danny_dwi_cahyono.contact_management.model.CreateAddressRequest;
+import danny_dwi_cahyono.contact_management.model.UpdateAddressRequest;
 import danny_dwi_cahyono.contact_management.repository.AddressRepository;
 import danny_dwi_cahyono.contact_management.repository.ContactRepository;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,27 @@ public class AddressService {
         Address address = new Address();
         address.setId(UUID.randomUUID().toString());
         address.setContact(contact);
+        address.setCity(request.getCity());
+        address.setStreet(request.getStreet());
+        address.setProvince(request.getProvince());
+        address.setCountry(request.getCountry());
+        address.setPostalCode(request.getPostalCode());
+
+        addressRepository.save(address);
+
+        return mapToAddressResponse(address);
+    }
+
+    @Transactional
+    public AddressResponse update(User user, UpdateAddressRequest request) {
+        validationService.validate(request);
+
+        Contact contact = contactRepository.findFirstByUserAndId(user, request.getContactId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        Address address = addressRepository.findFirstByContactAndId(contact, request.getAddressId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
+
         address.setCity(request.getCity());
         address.setStreet(request.getStreet());
         address.setProvince(request.getProvince());
