@@ -5,7 +5,7 @@ import danny_dwi_cahyono.contact_management.model.AuthorizedResponse;
 import danny_dwi_cahyono.contact_management.model.LoginUserRequest;
 import danny_dwi_cahyono.contact_management.repository.UserRepository;
 import danny_dwi_cahyono.contact_management.security.BCrypt;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

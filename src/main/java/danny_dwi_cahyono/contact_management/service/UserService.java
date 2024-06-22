@@ -6,7 +6,7 @@ import danny_dwi_cahyono.contact_management.model.RegisterUserRequest;
 import danny_dwi_cahyono.contact_management.model.UpdateUserRequest;
 import danny_dwi_cahyono.contact_management.repository.UserRepository;
 import danny_dwi_cahyono.contact_management.security.BCrypt;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
