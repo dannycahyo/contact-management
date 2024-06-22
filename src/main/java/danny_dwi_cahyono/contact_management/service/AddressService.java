@@ -49,7 +49,7 @@ public class AddressService {
         return mapToAddressResponse(address);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<AddressResponse> list(User user,
             String contactId) {
         Contact contact = contactRepository.findFirstByUserAndId(user, contactId)
