@@ -62,6 +62,17 @@ public class AddressService {
                 .toList();
     }
 
+    @Transactional
+    public void remove(User user, String contactId, String addressId) {
+        Contact contact = contactRepository.findFirstByUserAndId(user, contactId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        Address address = addressRepository.findFirstByContactAndId(contact, addressId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
+
+        addressRepository.delete(address);
+    }
+
     private AddressResponse mapToAddressResponse(Address address) {
         return AddressResponse.builder()
                 .id(address.getId())
