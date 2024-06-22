@@ -50,6 +50,17 @@ public class AddressService {
     }
 
     @Transactional(readOnly = true)
+    public AddressResponse get(User user, String contactId, String addressId) {
+        Contact contact = contactRepository.findFirstByUserAndId(user, contactId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found"));
+
+        Address address = addressRepository.findFirstByContactAndId(contact, addressId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address not found"));
+
+        return mapToAddressResponse(address);
+    }
+
+    @Transactional(readOnly = true)
     public List<AddressResponse> list(User user,
             String contactId) {
         Contact contact = contactRepository.findFirstByUserAndId(user, contactId)

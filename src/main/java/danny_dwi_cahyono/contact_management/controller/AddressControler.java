@@ -34,6 +34,16 @@ public class AddressControler {
                 .build();
     }
 
+    @GetMapping(path = "/api/contacts/{contactId}/addresses/{addressId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public WebResponse<AddressResponse> get(User user,
+            @PathVariable("contactId") String contactId,
+            @PathVariable("addressId") String addressId) {
+        AddressResponse addressResponse = addressService.get(user, contactId, addressId);
+        return WebResponse.<AddressResponse>builder()
+                .data(addressResponse)
+                .build();
+    }
+
     @GetMapping(path = "/api/contacts/{contactId}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
     public WebResponse<List<AddressResponse>> getAllAddress(User user,
             @PathVariable("contactId") String contactId) {
