@@ -1,0 +1,135 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: danny_dwi_cahyono
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: users
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  type: varchar(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: true
+              - column:
+                  name: token_expired_at
+                  type: bigint
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: 2
+      author: danny_dwi_cahyono
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: contacts
+      changes:
+        - createTable:
+            tableName: contacts
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: phone
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    foreignKeyName: fk_contact_user
+                    references: users(username)
+                    nullable: false
+  - changeSet:
+      id: 3
+      author: danny_dwi_cahyono
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: addresses
+      changes:
+        - createTable:
+            tableName: addresses
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: contact_id
+                  type: varchar(100)
+                  constraints:
+                    foreignKeyName: fk_address_contact
+                    references: contacts(id)
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: province
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: country
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: postal_code
+                  type: varchar(10)
+                  constraints:
+                    nullable: true
