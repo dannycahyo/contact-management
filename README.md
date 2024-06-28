@@ -1,6 +1,10 @@
 # Contact Management
 
-Contact Management is a Java Spring Boot RESTful API project designed to manage contacts. It provides functionalities such as creating, reading, updating, and deleting contact information. This project is built using Spring Boot, making it easy to set up and run in any environment.
+Contact Management is a Java Spring Boot RESTful API project designed for managing users, contacts, and addresses, facilitating comprehensive contact management functionalities within applications.
+
+## API Documentation
+
+For a detailed guide on how to use the Contact Management API, including endpoints for managing users, contacts, and addresses, please refer to our [API Documentation](https://documenter.getpostman.com/view/12539711/2sA3duEssJ#2a3f6a0f-cc9f-4393-8c90-be357fbca247). This comprehensive documentation is hosted on Postman and provides you with all the necessary information to integrate our API into your application seamlessly. It includes example requests, responses, and a clear explanation of each endpoint's functionality.
 
 ## Getting Started
 
